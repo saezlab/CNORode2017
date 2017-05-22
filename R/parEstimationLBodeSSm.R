@@ -22,7 +22,7 @@ parEstimationLBodeSSm <-function
 		reltol=1e-4,			atol=1e-3,				maxStepSize=Inf,		
 		maxNumSteps=100000,		maxErrTestsFails=50,	nan_fac=1,
 		lambda_tau=0, lambda_k=0, bootstrap=F,
-		SSpenalty_fac=0, SScontrolPenalty_fac=0, boot_seed=sample(1:10000,1)
+		SSpenalty_fac=0, SScontrolPenalty_fac=0, boot_seed=sample(1:10000,1), dataRandom=F
 )
 {
 
@@ -68,7 +68,8 @@ parEstimationLBodeSSm <-function
 	                                   bootstrap=bootstrap,
 	                                   SSpenalty_fac=SSpenalty_fac,
 	                                   SScontrolPenalty_fac=SScontrolPenalty_fac,
-	                                   boot_seed=boot_seed);
+	                                   boot_seed=boot_seed,
+	                                   dataRandom=dataRandom);
 	problem$x_L <- ode_parameters$LB[ode_parameters$index_opt_pars];
 	problem$x_U <- ode_parameters$UB[ode_parameters$index_opt_pars];
 	problem$x_0<- ode_parameters$parValues[ode_parameters$index_opt_pars];

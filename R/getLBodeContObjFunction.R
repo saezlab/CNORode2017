@@ -21,7 +21,7 @@ getLBodeContObjFunction<-
   transfer_function=3,    reltol=1e-4,            atol=1e-3,
   maxStepSize=Inf,        maxNumSteps=100000,        maxErrTestsFails=50,
   nan_fac=1, lambda_tau=0, lambda_k=0, bootstrap=F,
-  SSpenalty_fac=0, SScontrolPenalty_fac=0, boot_seed=sample(1:10000,1)
+  SSpenalty_fac=0, SScontrolPenalty_fac=0, boot_seed=sample(1:10000,1), dataRandom=F
 )
   {
   
@@ -43,7 +43,6 @@ getLBodeContObjFunction<-
   )
   {
     
-    
     ode_parameters1$parValues[ode_parameters1$index_opt_pars]=x;
     sim=sim_function1(cnolist1,model1,ode_parameters1$parValues);
     temp=sim;
@@ -54,6 +53,16 @@ getLBodeContObjFunction<-
     
     sim<-as.vector(unlist(lapply(sim,function(x) x[,indices1$signals])));
     measured_values<-as.vector(unlist(lapply(cnolist1$valueSignals,function(x)x)));
+    if (dataRandom==T){
+      set.seed(boot_seed)
+      t0Data<-as.vector(cnolist1$valueSignals[[1]])
+      randomData<-unlist(cnolist1$valueSignals[2:length(cnolist1$valueSignals)])
+      randomData[!is.na(randomData)]<-sample(randomData[!is.na(randomData)], length(randomData[!is.na(randomData)]), replace=F)
+      
+      measured_values<-c(t0Data, randomData)
+      cat("data are randomised\n")
+    }
+    
     
     # do bootstrap if required
     if (bootstrap==T){

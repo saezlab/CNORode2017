@@ -39,6 +39,9 @@ function(){
     params$SSpenalty_fac=0
     params$SScontrolPenalty_fac=0
     params$boot_seed=sample(1:10000,1)
+    
+    #added after to generate null hypothesis with random data
+    params$dataRandom=F
 
     return(params)
 }

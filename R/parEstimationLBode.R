@@ -48,7 +48,10 @@ parEstimationLBode<-function (cnolist, model, method="ga",
             bootstrap=paramsSSm$bootstrap,
             SSpenalty_fac=paramsSSm$SSpenalty_fac,
             SScontrolPenalty_fac=paramsSSm$SScontrolPenalty_fac,
-            boot_seed=paramsSSm$boot_seed
+            boot_seed=paramsSSm$boot_seed,
+            
+            #new
+            dataRandom=paramsSSm$dataRandom
             )
 
 
