@@ -79,8 +79,16 @@ getLBodeContObjFunction<-
     
     
     NApenalty<-length(NaNs_sim)*nan_fac1
-    SSpenalty<-SSpenalty_fac*sum(temp[[length(cnolist$timeSignals)+1]]^2)
-    SScontrolPenalty<-SScontrolPenalty_fac*sum(temp[[length(cnolist$timeSignals)+2]][1,]^2)
+    SSpenalty<-SSpenalty_fac*sum(temp[[length(cnolist1$timeSignals)+1]]^2)
+    # SScontrolPenalty<-SScontrolPenalty_fac*sum(temp[[length(cnolist$timeSignals)+2]][1,]^2)  # standard format
+    # SScontrolPenalty<-SScontrolPenalty_fac*sum(temp[[length(cnolist$timeSignals)+2]][1,indices1$signals]^2) # [penalising only measured species]
+    
+    # new SScontrolPenalty to penalise the actual residuals instead of the RHS
+    simControl<-temp[[length(cnolist1$timeSignals)]][1,indices1$signals];
+    measuredControl<-cnolist1$valueSignals[[length(cnolist1$timeSignals)]][1,];
+    SScontrolPenalty<-SScontrolPenalty_fac*(sum(simControl-measuredControl)^2)
+    # end new SScontrolPenalty
+    
     L1reg_k<-lambda_k*(sum(abs(ode_parameters1$parValues[ode_parameters1$index_k])))
     L1reg_tau<-lambda_tau*(sum(abs(ode_parameters1$parValues[ode_parameters1$index_tau])))
     L1reg<-L1reg_k+L1reg_tau
