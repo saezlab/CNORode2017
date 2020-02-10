@@ -6,9 +6,10 @@ This is a modified version of [CNORode](https://www.bioconductor.org/packages/re
 *CNORode2017* requires *CellNOptR* and *MEIGOR* which are available in Bioconductor and can be installed typing:
 
 ```R
-source("https://bioconductor.org/biocLite.R")
-biocLite("CellNOptR")
-biocLite("MEIGOR")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("CellNOptR")
+BiocManager::install("MEIGOR")
 ```
 
 *CNORode2017* can be installed typing:
